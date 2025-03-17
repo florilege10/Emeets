@@ -2,10 +2,11 @@ from django.urls import path
 from .views import (
     PublicationListForMenView, LikeCreateView, AbonnementCreateView, MessageCreateView,
     PublicationListForWomenView, LikeListForWomenView, MessageListForWomenView,
-    PhotoListCreateView, PhotoRetrieveUpdateDestroyView
+    PhotoListCreateView, PhotoRetrieveUpdateDestroyView, home
 )
 
 urlpatterns = [
+    path('', home, name='home'),
     path('men/publications/', PublicationListForMenView.as_view(), name='men_publications'),
     path('men/like/', LikeCreateView.as_view(), name='men_like'),
     path('men/abonnement/', AbonnementCreateView.as_view(), name='men_abonnement'),
