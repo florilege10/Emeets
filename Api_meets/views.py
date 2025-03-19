@@ -1,7 +1,9 @@
+from django.shortcuts import render
+from django.views import View
 from rest_framework import generics, permissions
-from .models import Publication, Like, Abonnement, Message, Photo
-from .serializers import PublicationSerializer, LikeSerializer, AbonnementSerializer, MessageSerializer, PhotoSerializer
-from .permissions import IsMan, IsWoman
+from .models import Publication, Like, Abonnement, Message, Photo, User
+from .serializers import PublicationSerializer, LikeSerializer, AbonnementSerializer, MessageSerializer, PhotoSerializer, UserSerializer
+from .permissions import IsMan, IsOwnerOrReadOnly, IsWoman
 from Api_meets import serializers
 from dj_rest_auth.registration.views import RegisterView
 from .serializers import CustomRegisterSerializer
@@ -83,22 +85,32 @@ class PhotoRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return Photo.objects.filter(user=self.request.user)
-    
-from dj_rest_auth.registration.views import RegisterView
-from .serializers import CustomRegisterSerializer
 
-class CustomRegisterView(RegisterView):
-    serializer_class = CustomRegisterSerializer
-
-
-from django.shortcuts import render
-from django.views import View
 
 class RegistrationFormView(View):
     def get(self, request):
-        return render(request, 'registration/registration.html')
-    
-from django.shortcuts import render
-
+        return render(request, 'registration/registration.html')    
 def home(request):
     return render(request, 'home.html')
+
+
+class UserListView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class UserDetailView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class UserUpdateView(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class UserUpdateView(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]

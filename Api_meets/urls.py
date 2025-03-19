@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     PublicationListForMenView, LikeCreateView, AbonnementCreateView, MessageCreateView,
     PublicationListForWomenView, LikeListForWomenView, MessageListForWomenView,
-    PhotoListCreateView, PhotoRetrieveUpdateDestroyView, home
+    PhotoListCreateView, PhotoRetrieveUpdateDestroyView, UserDetailView, UserListView, UserUpdateView, home
 )
 
 urlpatterns = [
@@ -16,4 +16,8 @@ urlpatterns = [
     path('women/messages/', MessageListForWomenView.as_view(), name='women_messages'),
     path('photos/', PhotoListCreateView.as_view(), name='photo_list_create'),
     path('photos/<int:pk>/', PhotoRetrieveUpdateDestroyView.as_view(), name='photo_retrieve_update_destroy'),
+    path('users/', UserListView.as_view(), name='user-list'),
+    path('users/<int:pk>/', UserDetailView.as_view(), name='user-detail'),
+    path('users/<int:pk>/update/', UserUpdateView.as_view(), name='user-update'),
+
 ]

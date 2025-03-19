@@ -61,3 +61,6 @@ class CustomRegisterSerializer(RegisterSerializer):
         user.is_active = True
         user.save()
         return user
+    
+
+from rest_framework import permissions
